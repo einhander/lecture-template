@@ -1,0 +1,234 @@
+%Here some packets for beamer presentations. Put needed packages here
+%\documentclass[pdf,hyperref={unicode},xcolor={x11names},svgnames]{beamer} % 10.2022 vimtex fail to detect master tex file, so it moved to main file
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amssymb,
+	amsfonts,
+	array,
+	wasysym,
+	%fixltx2e,
+	amsmath,
+	empheq,         % group equation
+	mathtext,
+	gensymb,
+	textcomp,        % obsolate
+	% cite,            % removed for biblatex
+	multirow,
+	enumerate,
+	float,
+	icomma,
+	xcolor,
+	fancybox,
+	soulutf8,
+	csquotes,
+	minted,
+	multimedia, %\movie[width=200pt, height=150pt]{example video}{MRauma.mpg}
+	booktabs,
+	indentfirst,
+	rotating,
+	fontawesome, % занчки ютуба и стима
+	tabularx,
+	tabulary,
+	pdfpc,      % presentation helper
+	pgf
+}
+
+%\usefonttheme[onlymath]{serif} %cm math font  
+\usefonttheme{professionalfonts}
+
+\usepackage[per-mode=symbol]{siunitx} % Provides the \SI{}{} command for typesetting SI units, набор значений единиц измерения
+
+% Позволяет использовать конструкцию где
+\usepackage{eqexpl}
+
+\usepackage[most]{tcolorbox}
+\usepackage{colortbl}
+%добавить в includegraphics[width=...frame]{image}
+
+\usepackage{graphicx} %хотим вставлять в рисунки?
+\graphicspath{{images/}{inc/}}%путь к рисункам
+
+\usepackage{enumitem}
+\setitemize{label=\usebeamerfont*{itemize item}%
+	\usebeamercolor[fg]{itemize item}
+	\usebeamertemplate{itemize item}, topsep=0pt}
+\setlist[enumerate]{label*=\arabic*. , leftmargin=15pt }
+
+
+\usepackage[
+	parentracker=true,
+	backend=biber,
+	hyperref=auto,
+	language=auto,
+	autolang=other, % иногда даетм много места в скобках
+	citestyle=gost-numeric,
+	defernumbers=true,
+	bibstyle=gost-numeric,
+]
+{biblatex}
+
+\DeclareSourcemap{
+	\maps[datatype=bibtex]{
+		\map{
+			\step[fieldset=language,fieldvalue=english] % fill empty languge field
+			\step[fieldsource=language,fieldtarget=langid, final] % fill langid with language value
+			%\step[fieldset=langid, fieldvalue={,}, append]
+			%\step[fieldset=keywords, origfieldval, append]
+		}
+	}
+}
+\addbibresource{biblio/jabref.bib}
+\addbibresource{biblio/activ.bib}
+\addbibresource{biblio/my.bib}
+\addbibresource{biblio/ochistka.bib}
+%\printbibliography
+
+% \setbeamercolor{bibliography entry title}{fg=blue!50!cyan}
+% \setbeamercolor{bibliography entry author}{fg=violet}
+% \setbeamercolor{bibliography entry location}{fg=green}
+\setbeamercolor{bibliography entry note}{fg=black}
+
+%============Химия=========================================================================
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig} % рисование структурных формул в химии <<настоящий ад и вынос мозга>>
+\makeatletter %использование mhchem для строчных атомов в структурных формулах
+\def\CF@node@content{%
+	\expandafter\expandafter\expandafter
+	\printatom\expandafter\expandafter\expandafter
+	{\csname atom@\number\CF@cnt@atomnumber\endcsname}%
+	\ensuremath{\CF@node@strut}%
+}
+\makeatother
+\setchemfig{
+	double bond sep=0.35700 em,
+	atom sep=1.78500 em,
+	bond offset=0.18265 em,
+	bond style={line width =0.06642 em}
+}
+%============================Позволяет рисовать полимеры===========
+\newcommand\setpolymerdelim[2]{\def\delimleft{#1}\def\delimright{#2}}
+\def\makebraces[#1,#2]#3#4#5{%
+	\edef\delimhalfdim{\the\dimexpr(#1+#2)/2}%
+	\edef\delimvshift{\the\dimexpr(#1-#2)/2}%
+	\chemmove{%
+		\node[at=(#4),yshift=(\delimvshift)]
+		{$\left\delimleft\vrule height\delimhalfdim depth\delimhalfdim
+				width0pt\right.$};%
+		\node[at=(#5),yshift=(\delimvshift)]
+		{$\left.\vrule height\delimhalfdim depth\delimhalfdim
+				width0pt\right\delimright_{\rlap{$\scriptstyle#3$}}$};}}
+%=============Пример==================================
+%%\setpolymerdelim()% выбор типа скобок
+%%Polyéthylène:
+%%\chemfig{\vphantom{CH_2}%используется для поднятия связи на нормальное расстояние от базовой линии
+%%	-[@{op,.75}]CH_2-CH_2-[@{cl,0.25}]}
+%%\makebraces[5pt,5pt]{\!\!n=13}{op}{cl}
+%===============конец химии=======================
+
+
+%=======Заметки в презентации====
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=bottom} % расположение заметок, закоментить для отключения 
+\setbeamerfont{note page}{size=\footnotesize} %шрифт
+%\note{My text} % example
+%\note<2> [item]{My enumerate} % example
+%===================
+%=================  Минд мапы  ====================================
+\usepackage{tikz}
+\usetikzlibrary{
+	mindmap,
+	positioning,
+	arrows,
+	shapes,
+	shapes.geometric,
+	shapes.callouts,
+	shapes.arrows,
+	calc,
+	decorations.pathmorphing,
+	patterns,
+	shadows}
+%============  Набор физических величин  ==================================
+\usepackage{siunitx} % Provides the \SI{}{} command for typesetting SI units, набор значений единиц измерения
+\sisetup{range-phrase=--,range-units = single,locale = DE} % no-russian :((
+
+%============  Выравнивание в тексте   ======================
+\usepackage{ragged2e}
+\justifying
+
+\usepackage[framemethod=TikZ]{mdframed} % красивые боксы вокруг слов
+
+
+\usepackage[export]{adjustbox}% рамка вокруг рисунков
+
+\makeatletter
+%\patchcmd{\@listI}{\itemsep3\p@}{\itemsep0em}{}{}
+\renewcommand{\@listI}{%
+	\leftmargin=10pt
+	\rightmargin=0pt
+	\labelsep=5pt
+	\labelwidth=20pt
+	\itemindent=0pt
+	\listparindent=0pt
+	\topsep=8pt plus 2pt minus 4pt
+	\partopsep=2pt plus 1pt minus 1pt
+	\parsep=0pt plus 1pt
+	\itemsep=\parsep}
+\makeatother
+
+\usepackage{listings}                % пакет для набора исходных текстов программ
+\usepackage{lstautogobble}           % доп пакет для игнорирования начальных пробелов
+% \usepackage{listingsutf8}           % пакет для набора исходных текстов программ
+\usepackage{xcolor}                  % пакет для цвета, включен здесь если ранее не включен
+
+\usepackage[outline]{contour}
+\contourlength{1.2pt}
+
+%=================  Конец пакетов  =============================================
+% Добавляет содержание перед секцией
+\AtBeginSection[]
+{\begin{frame}
+		\frametitle{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame} }
+
+
+
+
+
+
+%====================  Colors  ===========================================================
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}       %blue
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}           %white
+\definecolor{darkslateblue}{rgb}{0.28, 0.24, 0.55}      %blue
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}     %purple
+\definecolor{darkraspberry}{rgb}{0.53, 0.15, 0.34}      %purple
+
+\definecolor{debianred}{rgb}{0.84, 0.04, 0.33}          %red
+\definecolor{darkred}{rgb}{0.55, 0.0, 0.0}              %red
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}          %red
+\definecolor{arsenic}{rgb}{0.23, 0.27, 0.29}            %gray
+\definecolor{alizarin}{rgb}{0.82, 0.1, 0.26}
+\definecolor{lust}{rgb}{0.9, 0.13, 0.13}                %red
+\definecolor{lava}{rgb}{0.81, 0.06, 0.13}               %red
+\definecolor{harvardcrimson}{rgb}{0.79, 0.0, 0.09}      %red
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}    %lightgreen едренозеленый
+\definecolor{darkspringgreen}{rgb}{0.09, 0.45, 0.27}    %emerald green
+\definecolor{kellygreen}{rgb}{0.3, 0.73, 0.09}          %kelly green
+\definecolor{dartmouthgreen}{rgb}{0.05, 0.5, 0.06}      %green
+\definecolor{hookersgreen}{rgb}{0.0, 0.44, 0.0}         %green
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}                %yellow
+\definecolor{canaryyellow}{rgb}{1.0, 0.94, 0.0}         %yellow
+\definecolor{chromeyellow}{rgb}{1.0, 0.65, 0.0}         %yellow
+
+%=============== Tabularx columns =====================
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\input{./inc/extensions}
+
+
+
+\def\preambleloaded{Precompiled preamble loaded.}

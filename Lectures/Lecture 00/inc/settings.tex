@@ -1,0 +1,290 @@
+
+\usetheme[block=fill,progressbar=frametitle,background=light]{moloch}
+% Цвета ИТМО
+\usecolortheme{moloch-itmo}
+
+% Тут включается отображение заметок.
+\setbeameroption{show notes on second screen=top} % расположение заметок 
+
+\setbeamercovered{transparent} % полупрозрачность для \uncover
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black, % дефолтный цвет из темы
+	filecolor=magenta,
+	urlcolor=cyan,
+	pdftitle={Презентация ВКР},
+	pdfpagemode=FullScreen,
+}
+%=====================================ЛОГО======================================
+
+% Логотип на Титульной странице
+% Тут логотип отправлен вправо коммандой \hfill
+% \titlegraphic{\hfill\includegraphics[width=0.3\textwidth]{./inc/LogoSPbFTU-2.pdf}}
+\titlegraphic{\includegraphics[width=0.2\textwidth]{itmo/logo_basic_russian_white.pdf}}
+% Логотип на остальных страницах
+% \logo{
+% 	\begin{minipage}{5em}
+% 		\begin{block}{}
+% 			\centering
+% 			\bfseries
+% 			Powered by \\ {\small\textrm\LaTeX{}}  \\  and LAB\,60
+% 		\end{block}
+% 	\end{minipage}\hspace{1em}
+% }
+
+
+% Фоновый рисунок обычный
+% \setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth]{background}}
+% Фоновый рисунок тайловый
+% \setbeamertemplate{background canvas}{%
+% 	\vbox{%
+% 		\foreach\y in {1,...,2}{%
+% 				\foreach\x in {1,...,2}{%
+% 						\includegraphics[width=.5\paperwidth]{background}%
+% 					}%
+% 				\linebreak
+% 			}%
+% 	}%
+% }
+% Настройка слайда с названием секции
+\AtBeginSection{
+	\begingroup
+	\setbeamertemplate{background canvas}[default]
+	% \setbeamercolor{background canvas}{bg=grayFTU} % используется цвет из темы FTU
+	\logo{}
+	\frame{\sectionpage}
+	\endgroup
+}
+
+% Использовать блоки с тенью
+\setbeamertemplate{blocks}[rounded][shadow=true]
+% Визуальный эффект смены слайдов
+\addtobeamertemplate{background canvas}{\transfade[duration=2]}{}
+
+%======================== Изменение ЦВЕТА темы ======================================
+%\setbeamercolor{alerted text}{fg=orange}
+%\setbeamercolor{background canvas}{bg=white}
+%================цвет блока для всего документа==============
+%\setbeamercolor{block body alerted}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body example}{bg=normal text.bg!90!black}
+%\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{block title}{bg=blue}
+%\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{fine separation line}{}
+%\setbeamercolor{frametitle}{fg=brown}
+%\setbeamercolor{item projected}{fg=black}
+%\setbeamercolor{normal text}{bg=black,fg=yellow}
+%\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{section in sidebar}{fg=brown}
+%\setbeamercolor{section in sidebar shaded}{fg=grey}
+%\setbeamercolor{separation line}{}
+%\setbeamercolor{sidebar}{bg=red}
+%\setbeamercolor{sidebar}{parent=palette primary}
+%\setbeamercolor{structure}{bg=black, fg=green}
+%\setbeamercolor{subsection in sidebar}{fg=brown}
+%\setbeamercolor{subsection in sidebar shaded}{fg=grey}
+%\setbeamercolor{title}{fg=brown}
+%\setbeamercolor{titlelike}{fg=brown}
+%===============Конец описания цветов=======================
+
+
+%=============================БЛОКИ==========================================
+%цвет блока для всего документа
+%\setbeamercolor{block title}{fg=orange!20!black,bg=green}%bg=background, fg= foreground
+%\setbeamercolor{block body}{bg=green!10,fg=black}%bg=background, fg= foreground
+
+%создаем специальный блок другого цвета theorem, exampleblock, alertblock уже есть!
+\newenvironment<>{problock}[1]{%
+	\begin{actionenv}#2%
+		\def\insertblocktitle{#1}%
+		\par%
+		\mode<presentation>{%
+			\setbeamercolor{block title}{fg=white,bg=orange!20!black}
+			\setbeamercolor{block body}{fg=black,bg=yellow!20}
+			\setbeamercolor{itemize item}{fg=orange!20!black}
+			\setbeamertemplate{itemize item}[triangle]
+		}%
+		\usebeamertemplate{block begin}}
+		{\par\usebeamertemplate{block end}\end{actionenv}}
+
+%============TIKZ Styles=========================
+%
+% \tikzstyle{subst} = [rounded rectangle,
+% thick,
+% inner sep=5pt,
+% minimum size=1cm,
+% draw=red!50!black!50,
+% top color=white,
+% bottom color=red!50!black!50,
+% font=\itshape,
+% drop shadow]
+% \tikzstyle{process} = [ellipse,
+% thick,
+% minimum size=1cm,
+% draw=blue!50!black!50,
+% top color=white,
+% bottom color=blue!50!black!20,
+% drop shadow]
+%============END of TIKZ Styles=====================
+
+% Настройка tcolorbox
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+
+\newtcolorbox{mybox}[2][]%
+{%
+	attach boxed title to top center
+		= {yshift=-8pt},
+	%colback      = blue!5!white,
+	%colframe     = blue!75!black,
+	fonttitle    = \bfseries,
+	%opacityback=0.8,
+	%opacitybacktitle=0.75,
+	%colbacktitle = blue!85!black,
+	breakable,
+	left=0mm,
+	right=0mm,
+	%left skip=-2mm,
+	%right skip=-2mm,
+	title        = #2,#1,
+	skin=enhanced
+}
+\newtcolorbox{process}[2][]%
+{%
+	attach boxed title to top center
+		= {yshift=-8pt},
+	%colback      = blue!5!white,
+	%colframe     = blue!75!black,
+	fonttitle    = \bfseries,
+	%opacityback=0.8,
+	%opacitybacktitle=0.75,
+	colbacktitle = orange,
+	breakable,
+	left=0mm,
+	right=0mm,
+	%left skip=-2mm,
+	%right skip=-2mm,
+	title        = #2,#1,
+	skin=enhanced,
+}
+
+\newtcolorbox{autotherm}[2][]%
+{%
+	attach boxed title to top center
+		= {yshift=-8pt},
+	%colback      = blue!5!white,
+	%colframe     = blue!75!black,
+	fonttitle    = white,
+	%opacityback=0.8,
+	%opacitybacktitle=0.75,
+	colupper=white,
+	colback = orange,
+	breakable,
+	left=0mm,
+	right=0mm,
+	%left skip=-2mm,
+	%right skip=-2mm,
+	title        = #2,#1,
+	skin=enhanced,
+}
+\newtcolorbox{timeline}[2][]%
+{%
+	attach boxed title to top center
+		= {yshift=-8pt},
+	%colback      = blue!5!white,
+	%colframe     = blue!75!black,
+	%fonttitle    = white,
+	%opacityback=0.8,
+	%opacitybacktitle=0.75,
+	%colupper=white,
+	%colback = white,
+	colbacktitle = white,
+	breakable,
+	left=0mm,
+	right=0mm,
+	%left skip=-2mm,
+	%right skip=-2mm,
+	title        = #2,#1,
+	skin=enhanced,
+}
+\newtcbox{\xmybox}{
+	on line,
+	arc=7pt,
+	before upper={\rule[-3pt]{0pt}{5pt}},
+	boxrule=1pt,
+	boxsep=0pt,
+	left=2pt,
+	right=2pt,
+	top=3pt,
+	bottom=2pt
+}
+
+% Новый тип колонки для примера
+% \newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+
+\tcbset{tab1/.style={fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+			colback=green!10!white,colframe=green!75!black,colbacktitle=green!40!white,
+			coltitle=black,center title,freelance,frame code={
+					\foreach \n in {north east,north west,south east,south west}
+						{\path [fill=darkgreen] (interior.\n) circle (3mm); };},}}
+
+\tcbset{tab2/.style={enhanced,fonttitle=\bfseries,fontupper=\normalsize\sffamily,
+			colback=green!10!white,colframe=green!50!black,colbacktitle=green!40!white,
+			coltitle=black,center title}}
+
+
+%TODO
+% \useinnertheme{tcolorbox}
+
+% Настройка листинга для кода
+
+\lstset{ %
+	language={[latex]TeX},          % язык программирования
+	inputencoding=utf8,             % кодировка
+	autogobble=true,                % убирает пробелы в начале строки
+	basicstyle=\ttfamily\footnotesize,       % the size of the fonts that are used for the code
+	numbers=left,                   % where to put the line-numbers
+	numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+	stepnumber=1,                   % the step between two line-numbers. If it's 1, each line
+	% will be numbered
+	numbersep=0pt,                  % how far the line-numbers are from the code
+	% backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+	showspaces=false,               % show spaces adding particular underscores
+	showstringspaces=false,         % underline spaces within strings
+	showtabs=false,                 % show tabs within strings adding particular underscores
+	% frame=single,                   % adds a frame around the code
+	rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+	tabsize=2,                      % sets default tabsize to 2 spaces
+	captionpos=b,                   % sets the caption-position to bottom
+	title=\lstname,                 % show the filename of files included with \lstinputlisting;
+	% also try caption instead of title
+	keywordstyle=\color{green},       % keyword style
+	commentstyle=\color{blue},      % comment style
+	stringstyle=\color{gray},      % string literal style
+	escapeinside={\%*}{*)},         % if you want to add a comment within your code
+	extendedchars=\true,            % поддержка расширенных символов
+	keepspaces = true               %!!!! пробелы в комментариях
+	texcl=true,
+	breaklines=true,                % разрывать строку
+	breakatwhitespace=true,         % разрыв по пробелам
+	aboveskip=-0.25 \baselineskip,   % верхний интервал
+	belowskip=-1.5 \baselineskip,   % нижный интервал
+	morekeywords={*,note,... }      % if you want to add more keywords to the set
+}
+\renewcommand\lstlistingname{Листинг}
+
+
+\useinnertheme[
+	rounded,
+	% shadow
+]{tcolorbox}
+
+% \tcbsetforeverylayer{
+% 	borderline={1pt}{0pt}{greenFTU!40!black}
+% }
+
